@@ -1,0 +1,138 @@
+{
+    "users":[
+        {   "key" :"1",
+            "msdn":"256704255401","pin":"1234","email":"david@mobiklinic.com","name":"David Wampamba","type":4,
+            "devices":[{
+                "name":"Infinix Hot s3",
+                "serialnumber":"",
+                "state":"active",
+                "IMEI":""
+            }],
+            "status":"review"
+        },
+        {
+            "key":"2",
+            "msdn":"256783550994","pin":"1234","email":"davie@mobiklinic.com","name":"Davie of UG ","type":1,
+            "devices":[
+                {
+                    "name":"Infinix Hot s3",
+                    "serialnumber":"",
+                    "state":"active",
+                    "IMEI":""
+                },
+                {
+                    "name":"Tecno Camon C7",
+                    "serialnumber":"",
+                    "state":"disconnected",
+                    "IMEI":""
+                }
+            ],
+            "status":"none"
+        },
+        {   "key":"3",
+            "msdn":"256789441122","pin":"1234","email":"drew@mobiklinic.com","name":"Drew Ddembe","type":2,
+            "devices":[
+                {
+                    "name":"iPhone 7s",
+                    "serialnumber":"",
+                    "state":"active",
+                    "IMEI":""
+                }
+            ],
+            "status":"pending"
+        },
+        {   "key":"4",
+            "msdn":"256792334433","pin":"1234","email":"calvin@mobiklinic.com","name":"Calvin Smith","type":3,
+            "devices":[
+                {
+                    "name":"Tecno",
+                    "serialnumber":"",
+                    "state":"active",
+                    "IMEI":""
+                }
+            ],
+            "status":"verified"
+        }
+    ],
+    "user_meta":[
+        {   
+            "code" : 8973,
+            "msdn":"256704255401","profile": {
+                "photo":"",
+                "gender":"male",
+                "contacts": [],
+                "education" : [],
+                "work": [],
+                "specialisation":"",
+                "next_of_kin":{}
+
+            }
+        },
+        {   
+            "code" : 4573,
+            "msdn":"256702255404","profile": {
+                "photo":"",
+                "gender":"Female",
+                "contacts": [],
+                "education" : [],
+                "work": [],
+                "specialisation":"",
+                "next_of_kin":{}
+            }
+        }
+    ],
+    "current_state": [
+        { "msdn":"256704255401","state":"active", "last_seen":""},
+        { "msdn":"256704255401","state":"offline", "last_seen":""},
+        { "msdn":"256704255401","state":"offline","last_seen":"" },
+        { "msdn":"256704255401","state":"active", "last_seen":""}
+    ],
+    "messages": [
+        {"initiator":"256783550994","to":"256704255401","timestamp":"26082019045456",
+            "thread": [
+                {"timestamp":"26082019045456","sender":"256783550994","message":"hhjjkkkjjjkllljjjhkkhkkl"},
+                {"timestamp":"26082019045456","sender":"256783550994","message":"hhjjkkkjjjkllljjjhkkhkkl"},
+                {"timestamp":"26082019045456","sender":"256783550994","message":"hhjjkkkjjjkllljjjhkkhkkl"},
+                {"timestamp":"26082019045456","sender":"256783550994","message":"hhjjkkkjjjkllljjjhkkhkkl"}  
+            ]
+        },
+        {"initiator":"256783550994","to":"256704255401","timestamp":"26082019045456",
+            "thread": [
+                {"timestamp":"26082019045456","sender":"256783550994","message":"hhjjkkkjjjkllljjjhkkhkkl"},
+                {"timestamp":"26082019045456","sender":"256783550994","message":"hhjjkkkjjjkllljjjhkkhkkl"},
+                {"timestamp":"26082019045456","sender":"256783550994","message":"hhjjkkkjjjkllljjjhkkhkkl"},
+                {"timestamp":"26082019045456","sender":"256783550994","message":"hhjjkkkjjjkllljjjhkkhkkl"}  
+            ]
+        }
+    ],
+    "patients":[
+        {   
+            "code" :7899,
+            "date" : "29-09-2018",
+            "msdn":"256704255401",
+            "gender" :"Male",
+            "age_group":"20-30",
+            "name":"David Wampamba"
+        },
+        {
+            "code":9009,
+            "date" : "20-06-2018",
+            "msdn":"256783550994",
+            "gender":"Female",
+            "age_group":"20-28",
+            "email":"lydia@domain.com",
+            "name":"Lydia Nabawanuka"
+    
+        },
+        {   
+            "code":10345,
+            "date" : "30-07-2019",
+            "msdn":"256792334433",
+            "gender":"Female",
+            "age_group":"20-28",
+            "email":"gertrude@domain.com",
+            "name":"Gertrude"
+        }
+    ]
+
+}
