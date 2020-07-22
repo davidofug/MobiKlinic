@@ -72,8 +72,8 @@ import com.android.build.OutputFile
  *
  *   // supply additional arguments to the packager
  *   extraPackagerArgs: []
+ * ]
  */
-
 
 project.ext.react = [
     entryFile: "index.js",
@@ -149,21 +149,7 @@ android {
             keyAlias 'androiddebugkey'
             keyPassword 'android'
         }
-        release {
-            // storeFile file('mobiklinic_rn_app.keystore')
-            // storePassword 'S!tuk@!929'
-            // keyAlias 'S!tuk@!929'
-            // keyPassword 'S!tuk@!929'
-
-            if (project.hasProperty('MYAPP_UPLOAD_STORE_FILE')) {
-                storeFile file(MYAPP_UPLOAD_STORE_FILE)
-                storePassword MYAPP_UPLOAD_STORE_PASSWORD
-                keyAlias MYAPP_UPLOAD_KEY_ALIAS
-                keyPassword MYAPP_UPLOAD_KEY_PASSWORD
-            }
-        }
     }
-
     buildTypes {
         debug {
             signingConfig signingConfigs.debug
@@ -222,5 +208,3 @@ task copyDownloadableDepsToLibs(type: Copy) {
 }
 
 apply from: file("../../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesAppBuildGradle(project)
-// Optional for React Native Vector Icons
-apply from: "../../node_modules/react-native-vector-icons/fonts.gradle"

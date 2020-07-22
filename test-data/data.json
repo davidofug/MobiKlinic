@@ -1,19 +1,17 @@
 {
     "users":[
-        {   "key" :"1",
-            "msdn":"256704255401","pin":"1234","email":"david@mobiklinic.com","name":"David Wampamba",
+        {
+            "msdn":"256704255401","pin":"1234","email":"david@mobiklinic.com","name":"David Wampamba","type":4,
             "devices":[{
                 "name":"Infinix Hot s3",
                 "serialnumber":"",
                 "state":"active",
                 "IMEI":""
             }],
-            "status":"review",
-            "role" : 1
+            "status":"review"
         },
         {
-            "key":"2",
-            "msdn":"256783550994","pin":"1234","email":"davie@mobiklinic.com","name":"Davie of UG ",
+            "msdn":"256783550994","pin":"1234","email":"davie@mobiklinic.com","name":"Davie of UG ","type":1,
             "devices":[
                 {
                     "name":"Infinix Hot s3",
@@ -28,11 +26,10 @@
                     "IMEI":""
                 }
             ],
-            "status":"none",
-            "role" : 1
+            "status":"none"
         },
-        {   "key":"3",
-            "msdn":"256789441122","pin":"1234","email":"drew@mobiklinic.com","name":"Drew Ddembe",
+        {
+            "msdn":"256789441122","pin":"1234","email":"drew@mobiklinic.com","name":"Drew Ddembe","type":2,
             "devices":[
                 {
                     "name":"iPhone 7s",
@@ -41,11 +38,10 @@
                     "IMEI":""
                 }
             ],
-            "status":"pending",
-            "role":2
+            "status":"pending"
         },
-        {   "key":"4",
-            "msdn":"256792334433","pin":"1234","email":"calvin@mobiklinic.com","name":"Calvin Smith",
+        {
+            "msdn":"256792334433","pin":"1234","email":"calvin@mobiklinic.com","name":"Calvin Smith","type":3,
             "devices":[
                 {
                     "name":"Tecno",
@@ -54,28 +50,11 @@
                     "IMEI":""
                 }
             ],
-            "status":"verified",
-            "role" : 2
-            
-        },
-        {   "key":"5",
-            "msdn":"256792334433","pin":"1234","email":"calvin@mobiklinic.com","name":"Calvin Smith",
-            "devices":[
-                {
-                    "name":"Tecno",
-                    "serialnumber":"",
-                    "state":"active",
-                    "IMEI":""
-                }
-            ],
-            "status":"verified",
-            "role" : 2
-
+            "status":"verified"
         }
     ],
     "user_meta":[
-        {   
-            "code" : 8973,
+        {
             "msdn":"256704255401","profile": {
                 "photo":"",
                 "gender":"male",
@@ -85,18 +64,6 @@
                 "specialisation":"",
                 "next_of_kin":{}
 
-            }
-        },
-        {   
-            "code" : 4573,
-            "msdn":"256702255404","profile": {
-                "photo":"",
-                "gender":"Female",
-                "contacts": [],
-                "education" : [],
-                "work": [],
-                "specialisation":"",
-                "next_of_kin":{}
             }
         }
     ],
@@ -123,146 +90,6 @@
                 {"timestamp":"26082019045456","sender":"256783550994","message":"hhjjkkkjjjkllljjjhkkhkkl"}  
             ]
         }
-    ],
-    "ambulances": [
-        {   
-            "plate" : "UAB 225B",
-            "msdn":"256704255401",
-            "driver":"Geoffrey Ssekatawa",
-            "type":"Private",
-            "status":1,
-            "hospital":"IHK Namuwongo",
-            "location":"Kabalagala"
-        },
-        {   
-            "plate" : "UAM 123X",
-            "msdn":"256792442289",
-            "driver":"Cissy Nagitta",
-            "type":"Private",
-            "status":1,
-            "hospital":"Mengo",
-            "location":"Mengo"
-        },
-        {   
-            "plate" : "UAF 599B",
-            "msdn":"256713800800",
-            "driver":"Okoti Ogoth",
-            "type":"Public",
-            "status":3,
-            "hospital":"Mulago",
-            "location":"Mulago, Kampala"
-        },
-        {   
-            "plate" : "UAC 100S",
-            "msdn":"256772406080",
-            "driver":"Geoffrey Isingoma",
-            "type":"Public",
-            "status":2,
-            "hospital":"IHK Namuwongo",
-            "location":"Kabalagala"
-        },
-        {   
-            "plate" : "UAB 225B",
-            "msdn":"256781400700",
-            "driver":"Asuman Lubowa",
-            "type":"Public",
-            "status":3,
-            "hospital":"Mulago - Kiruddu",
-            "location":"Kiruddu"
-        },
-        {   
-            "plate" : "UAJ 400A",
-            "msdn":"256701555777",
-            "driver":"Joanita Namyalo",
-            "type":"Private",
-            "status":2,
-            "hospital":"St.Francis Nsambya",
-            "location":"Nsambya"
-        }
-    ],
-    "diagnosis": [
-        {   
-            "code" :7899,
-            "date" : "29-09-2018",
-            "msdn":"256704255401",
-            "gender" :"Male",
-            "age_group":"20-30",
-            "name":"David Wampamba",
-            "desc":"High temperature, Lack of apetite for 3 days, Dizzyness.",
-            "service":"Blood test, discovered Malaria, prescribed medicine and advised diet"
-        },
-        {
-            "code":9009,
-            "date" : "20-06-2018",
-            "msdn":"256783550994",
-            "gender":"Female",
-            "age_group":"20-28",
-            "email":"lydia@domain.com",
-            "name":"Lydia Nabawanuka",
-            "desc":"Headache, Stomachache, Vomiting, since a day ago.",
-            "service":"Referred to health centre."
-    
-        },
-        {   
-            "code":10345,
-            "date" : "30-07-2019",
-            "msdn":"256792334433",
-            "gender":"Female",
-            "age_group":"20-28",
-            "email":"gertrude@domain.com",
-            "name":"Gertrude",
-            "desc":"Sicklecells victim, struggling with breath.",
-            "service":"Ambulance to Mulago hospital"
-        }
-    ],
-    "doctors": [
-        {   
-            "msdn":"256704255401",
-            "name":"Sammy Lubyayi",
-            "status":1,
-            "hospital":"IHK Namuwongo",
-            "district":"Kampala",
-            "languages":"Luganda, English"
-        },
-        {   
-            "msdn":"256792442289",
-            "name":"Cissy Nagitta",
-            "status":1,
-            "hospital":"Mengo",
-            "district":"Mukono",
-            "languages":"English, Luganda"
-        },
-        {   
-            "msdn":"256713800800",
-            "name":"Hassan Kaweesi",
-            "status":3,
-            "hospital":"Mulago",
-            "district":"Mukono",
-            "languages":"English, Luganda"
-        },
-        {   
-            "msdn":"256772406080",
-            "name":"Mugisha Conrad",
-            "status":2,
-            "hospital":"IHK Namuwongo",
-            "district":"Mpigi",
-            "languages":"English, Luganda, Runyankole, Kiswahili"
-        },
-        {   
-            "msdn":"256781400700",
-            "name":"Harriet Nabagesera",
-            "status":3,
-            "hospital":"Mulago - Kiruddu",
-            "district":"Masaka",
-            "languages":"English, Luganda, French"
-        },
-        {   
-            "msdn":"256701555777",
-            "name":"Joanita Namyalo",
-            "status":2,
-            "hospital":"St.Francis Nsambya",
-            "district":"Luwero",
-            "languages":"English, Luganda"
-        }
     ]
+
 }

@@ -1,10 +1,8 @@
 export const COLORS = {
     PRIMARY:'#42a5f5',
-    SECONDARY:'rgb(255,255,255)',
+    SECONDARY:'#fff',
     WHITE_LOW:'rgba(255,255,255,0.6)',
-    BLACK: 'rgb(0,0,0)',
-    GREY: 'rgba(0,0,0,0.4)',
-    GREY_LIGTHER: 'rgba(0,0,0,0.2)',
+    BLACK: '#000',
     ACCENT_1:'#7cd2ff',
     ERRORS:'#f00',
 
