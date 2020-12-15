@@ -1,5 +1,10 @@
 import 'react-native-gesture-handler'
 import * as React from 'react'
+import {
+    View, 
+    Button,
+    Image
+} from 'react-native'
 import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
 
@@ -23,7 +28,26 @@ export const MainNavigation = () => {
     return (
         <NavigationContainer>
             <Stack.Navigator>
-              <Stack.Screen name="Covid" component={Covid19} />
+              <Stack.Screen 
+                name="Covid"
+                component={Covid19}
+                options={{
+                    headerTitle: props =>
+                        <View>
+                            <Image 
+                                style={{width: 30, height: 30}}
+                                source={require('../imgs/logo.png')}
+				            />
+                       </View>,
+                    headerRight: () => (
+                      <Button
+                        onPress={() => alert('This is a button!')}
+                        title="Info"
+                        color="#000"
+                      />
+                    ),
+                  }}
+              />
               <Stack.Screen name="News" component={News} />
               <Stack.Screen name="General" component={General} />
               <Stack.Screen name="Maternal" component={Maternal} />
