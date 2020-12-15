@@ -1,4 +1,4 @@
-import React from 'react'
+/* import React from 'react'
 import {createMaterialTopTabNavigator } from 'react-navigation-tabs'
 import Check from '../views/checker'
 import Stats from '../views/stats'
@@ -26,4 +26,4 @@ const Tabs = createMaterialTopTabNavigator({ Check, Stats, Info },
     }
 )
 
-export default Tabs
+export default Tabs */

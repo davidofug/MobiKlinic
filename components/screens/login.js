@@ -1,184 +1,179 @@
-import React, {Component} from 'react'
-import {View,Modal,Image,Alert,Text, TextInput,StyleSheet, StatusBar,TouchableOpacity } from 'react-native'
+import * as React from 'react'
+import axios from 'axios'
+
+import {
+	View,
+	Modal,
+	Image,
+	Alert,
+	Text,
+	TextInput,
+	StyleSheet,
+	StatusBar,
+	TouchableOpacity
+} from 'react-native'
+
 import Icon from 'react-native-vector-icons/Feather'
-import {COLORS,DIMENS} from '../constants/styles'
+import {
+	COLORS,
+	DIMENS
+} from '../constants/styles'
 import {URLS} from '../constants/API'
-import {users} from '../../test-data/data.json'
-import {Drawer} from '../config/navigators'
+import {Drawer} from '../config/navigations'
 import SignUp from './signup'
 
-export default class Login extends Component {
+const Login = ({props}) => {
 
-	constructor( props ) {
-		super( props )
+	React.useEffect(() => {
+		user.isLoggedIn && props.navigation.navigate({Dashboard})
 
-		this.state = {
-			username: '',
-			password:'',
-			showError:false,
-			isLoggedIn:false,
-			toSignUp:false,
-			users:'',
-			msg:''
-		}
-	}
-	
-	_doLogin() {
-		this.setState({msg:'',showError:false})
-		const {username,password} = this.state
-		let userFound = false
+	}, [] )
 
-		if( password != undefined || username != undefined ) {
-			if ( password.length > 0 && username.length > 0 ) {
-				if( users != '' ) {
-					
-					if ( typeof users != 'undefined' && users.length > 0 ) {
-
-						users.forEach( USER => {
-							if( USER.msdn == username && USER.pin == password ) {
-								userFound = true
-							}
-						})
-
-						if (userFound)
-							this.setState({msg:``,isLoggedIn:true,showError: false})
-						else
-							this.setState({msg: `Wrong username or password`,showError:true})
-
-					} else {
-						this.setState({msg:`App can't find user`,showError:true})
-					}
-
-				} else {
-
-					fetch( URLS.BASE, {
-						'username':username,
-						'password':password
-					}).then( response => {
-						console.log( response)
-					}).catch( error => {
-						console.error( error )
-					})
-
-				}
- 
-			} else {
-				this.setState({msg:`Username and password required`,showError:true})
-			}
-		} else {
-			this.setState({msg:`Username and password required`,showError:true})
-		}
-	}
-
-	static navigationOptions = {
+	navigationOptions = {
 		header: null
 	}
 
-	_modal = (status,msg) => (
-		<Modal
-			animationType="slide"
-			transparent={true}
-			visible={status}
-			onPress={() => !status}
-		>
-		<View style={{marginTop: 22}}>
-		  <View>
-			<Text>{msg}</Text>
-		  </View>
-		</View>
-	  </Modal>
-	)
+	const [error,setErrors] = React.useState({isError:false, msg:''})
+	const [isLoading, setLoading] = React.useState(false)
 
-	render(){
+	const [user, setUser] = React.useState({
+		username: '',
+		password: '',
+		isLoggedIn: false,
+		msg: '',
+		accessToken: '',
+		refreshToken: ''
+	})
 
-		const {isLoggedIn,toSignUp,msg,username,password,showError} = this.state
+	const _doLogin = async () => {
 
-		if(showError) {
+		setLoading(true)
+
+		const {password, username, msg, isLoggedIn} = user
+
+		if( password != undefined || username != undefined || password != '' || username != '') {
+
+			if ( password.length > 0 && username.length > 0 ) {
+
+				try {
+
+					const response = await axios.post(`${URLS.BASE}/users/login`, {
+						'username': username,
+						'password': password
+					})
+
+					const {result, accessToken, refreshToken} = response.data
+					
+					if(result == 'Success') {
+						setUser({...user, isLoggedIn: true, accessToken, refreshToken})
+						// props.navigation.navigate({Dashboard})
+						console.log(props)
+						setLoading(false)
+
+					} else {
+
+						console.log(response)
+
+						setErrors({isError: true, msg:'Something is wrong!'})
+
+						Alert.alert(
+							'Failure',
+							`Login failed`,
+							[
+								{ text: 'OK', }
+							]
+						)
+					}
+					
+				} catch (e) {
+					console.log(e)
+				}
+			}
+		} else {
 			Alert.alert(
-				'Error',
-				msg,
+				'Failed',
+				`Wrong username/password`,
 				[
 					{ text: 'OK', }
 				]
 			)
 		}
+	} 
+/* 
+	if(user.isLoggedIn)
+		return <Dashboard /> */
 
-		if(isLoggedIn) {
-			return <Drawer/>
-		} else if(toSignUp) {
-			return <SignUp/>
-		}
+	return(
+		<View style={styles.container}>
+			<StatusBar
+				backgroundColor={COLORS.PRIMARY}
+				barStyle="light-content"
+			/>
 
-		return(
-			<View style={styles.container}>
-				<StatusBar
-					backgroundColor={COLORS.PRIMARY}
-					barStyle="light-content"
+			<View style={styles.logoContainer}>
+				<Image 
+					style={{width: 70, height: 70}}
+					source={require('../imgs/logo.png')}
 				/>
-
-				<View style={styles.logoContainer}>
-					<Image 
-						style={{width: 70, height: 70}}
-						source={require('../imgs/logo.png')}
-					/>
-					<Text style={styles.title}>MobiKlinic</Text>
-					<Text style={styles.subTitle}>Sign in</Text>
-				</View>
-
-				<View style={styles.formContainer}>
-					<View>
-						
-						<TextInput style={styles.input}
-							autoCorrect={false}
-							// underlineColorAndroid={COLORS.WHITE_LOW}
-							placeholderTextColor='grey'
-							selectionColor={COLORS.SECONDARY}
-							onChangeText={( username ) => this.setState( {username,showError:false} )}
-							value={username}
-							placeholder='Phone number e.g: 256778xxxxxx'
-						/>
-
-						<TextInput style={styles.input}
-							password={true}
-							secureTextEntry={true}
-							autoCorrect={false}
-							//underlineColorAndroid={COLORS.WHITE_LOW}
-							placeholderTextColor='grey'
-							selectionColor={COLORS.SECONDARY}
-							onChangeText={( password ) => this.setState( {password,showError:false} )}
-							value={password}
-							placeholder='Password'
-						/>
-
-						<TouchableOpacity
-							style={styles.submit}
-							onPress={ () => this._doLogin() }
-						>
-							<Text style={styles.submitText}>Sign in</Text>
-							<Icon
-								// name="log-in"
-								name="arrow-right"
-								size={20}
-								strokeSize={3}
-								// color={COLORS.WHITE}
-							/>
-
-						</TouchableOpacity>
-
-						{/*<TouchableOpacity
-							onPress={ () => this.setState({toSignUp:true})}
-						>
-							<Text style={[styles.textColor,styles.linkItem]}>or, sign up</Text>
-						</TouchableOpacity> */}
-
-					</View>
-
-				</View>
+				<Text style={styles.title}>MobiKlinic</Text>
+				{isLoading ? <Text>Logging in, please wait...</Text> : <Text style={styles.subTitle}>Sign in</Text>}
 			</View>
-		)
-		
-	}
+
+			<View style={styles.formContainer}>
+				{error.isError && <Text>{error.msg}</Text>} 
+				<View>
+					
+					<TextInput style={styles.input}
+						autoCorrect={false}
+						// underlineColorAndroid={COLORS.WHITE_LOW}
+						placeholderTextColor='grey'
+						selectionColor={COLORS.SECONDARY}
+						onChangeText={ text => setUser({...user, username: text, showError:false} )}
+						value={user.username}
+						placeholder='Phone number e.g: 256778xxxxxx'
+					/>
+
+					<TextInput style={styles.input}
+						password={true}
+						secureTextEntry={true}
+						autoCorrect={false}
+						//underlineColorAndroid={COLORS.WHITE_LOW}
+						placeholderTextColor='grey'
+						selectionColor={COLORS.SECONDARY}
+						onChangeText={ text => setUser({...user, password: text, showError:false} )}
+						value={user.password}
+						placeholder='Password'
+					/>
+
+					<TouchableOpacity
+						style={styles.submit}
+						onPress={_doLogin}
+					>
+						<Text style={styles.submitText}>Sign in</Text>
+						<Icon
+							name="arrow-right"
+							size={20}
+							strokeSize={3}
+							// color={COLORS.WHITE}
+						/>
+
+					</TouchableOpacity>
+
+					{/*<TouchableOpacity
+						onPress={ () => this.setState({toSignUp:true})}
+					>
+						<Text style={[styles.textColor,styles.linkItem]}>or, sign up</Text>
+					</TouchableOpacity> */}
+
+				</View>
+
+			</View>
+		</View>
+	)
+
 }
+
+export default Login
 
 const styles = StyleSheet.create({
 	container: {
@@ -193,7 +188,7 @@ const styles = StyleSheet.create({
 		justifyContent:'center'
 	},
 	title:{
-		color: COLORS.WHITE_LOW
+		color: COLORS.PRIMARY
 	},
 	subTitle:{
 		color: COLORS.SECONDARY,
@@ -251,6 +246,7 @@ const styles = StyleSheet.create({
 		//color:COLORS.PRIMARY,
 		// textAlign:'center',
 		// textTransform: 'uppercase',
+		color: COLORS.ACCENT_1,
 		fontWeight:'bold'
 	}
 })

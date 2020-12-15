@@ -1,4 +1,6 @@
-import React, { Component } from 'react'
+/* import * as React from 'react'
+import SplashScreen from 'react-native-splash-screen'
+
 import {
 	createStackNavigator,
 	createAppContainer
@@ -10,12 +12,6 @@ import signUp from './views/forms/signup'
 import Doctors from './views/doctors'
 import Tabs from './config/tabs'
 import {COLORS} from './constants/styles'
-
-export default class Splash extends Component {
-    render(){
-        return( <AppCreateAppContainer /> )
-    }
-}
 
 const AppNavigation = createStackNavigator({
 
@@ -39,3 +35,15 @@ const AppNavigation = createStackNavigator({
 })
 
 const AppCreateAppContainer = createAppContainer(AppNavigation)
+
+const Splash = () => {
+
+  React.useEffect(() => {
+    SplashScreen.hide()
+  })
+
+  return <AppCreateAppContainer/>
+
+}
+
+export default Splash */

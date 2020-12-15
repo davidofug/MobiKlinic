@@ -1,3 +1,3 @@
 export const URLS = {
-    BASE:'https://david.ug/mobiclinic'
+    BASE: 'https://mobi-app-api.herokuapp.com'
 }

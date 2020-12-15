@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
-import {View,Image,TouchableOpacity,Text, StatusBar,StyleSheet } from 'react-native';
+import {View, Image,TouchableOpacity,Text, StatusBar,StyleSheet } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
 import {COLORS,DIMENS} from '../constants/styles'
 import CustomHeader from '../parts/custom-header'
 
-export default class About extends Component{
+const About = () => {
 
 	_header = () => (
         <CustomHeader
@@ -46,42 +46,40 @@ export default class About extends Component{
             }
         />
 	)
-	
-	render(){
-		return(
 
-            <View style={STYLES.wrapper}>
-                <StatusBar
-                    backgroundColor={COLORS.PRIMARY}
-                    barStyle="light-content"
-                />
-                {this._header()}
-                <View style={STYLES.body}>
-					<View style={STYLES.logoContainer}>
-						<Image 
-							style={{width: 70, height: 70}}
-							source={require('../imgs/logo.png')}
-						/>
-						<Text style={STYLES.title}>MobiKlinic</Text>
-					</View>
+	return(
 
-					<View>
-						<Text style={STYLES.desc}>For professional digital health services, quickly and affordably.</Text>
-						<Text style={STYLES.heading}>In partnership with Ablestate</Text>
-						<Text style={STYLES.desc}>Report technical challenges</Text>
-						<Text>Ablestate</Text>
-						<Text><Icon name="phone-call" /> 0704255401</Text>
-						<Text><Icon name="mail"/> help@ablestate.org</Text>
-					</View>
+        <View style={STYLES.wrapper}>
+            <StatusBar
+                backgroundColor={COLORS.PRIMARY}
+                barStyle="light-content"
+            />
+            {this._header()}
+            <View style={STYLES.body}>
+                <View style={STYLES.logoContainer}>
+                    <Image 
+                        style={{width: 70, height: 70}}
+                        source={require('../imgs/logo.png')}
+                    />
+                    <Text style={STYLES.title}>MobiKlinic</Text>
                 </View>
 
+                <View>
+                    <Text style={STYLES.desc}>For professional digital health services, quickly and affordably.</Text>
+                    <Text style={STYLES.heading}>In partnership with Ablestate</Text>
+                    <Text style={STYLES.desc}>Report technical challenges</Text>
+                    <Text>Ablestate</Text>
+                    <Text><Icon name="phone-call" /> 0704255401</Text>
+                    <Text><Icon name="mail"/> help@ablestate.org</Text>
+                </View>
             </View>
 
-        )
+        </View>
 
-	}
+    )
+
 }
-
+export default About
 const STYLES = StyleSheet.create({
 	logoContainer: {
 		alignItems:'center',

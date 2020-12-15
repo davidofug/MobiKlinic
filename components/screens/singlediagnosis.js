@@ -3,7 +3,6 @@ import {View,Alert, TextInput,TouchableOpacity, Text,StyleSheet, StatusBar } fro
 import Icon from 'react-native-vector-icons/Feather'
 import { COLORS, DIMENS } from '../constants/styles'
 
-
 export default class ViewDiagnosis extends Component {
 
 	constructor( props ) {

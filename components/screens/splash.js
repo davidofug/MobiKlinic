@@ -1,13 +1,16 @@
-import React, { useEffect } from 'react'
+
+import * as React from 'react'
 import SplashScreen from 'react-native-splash-screen'
-import Login from "./login"
+import {MainNavigation} from '../config/navigations'
 
-function Splash() {
+const Splash = () => {
 
-  useEffect(() => {
+  React.useEffect(() => {
     SplashScreen.hide()
-  })
-  return <Login/>
+  },[])
+
+  return <MainNavigation />
+
 }
 
 export default Splash
