@@ -1,23 +1,35 @@
-import React, {Component} from 'react'
-import {View, Linking, FlatList, TouchableOpacity,Text,StyleSheet, StatusBar } from 'react-native'
+import * as React from 'react'
+
+import { 
+    View, 
+    Linking,
+    FlatList,
+    TouchableOpacity,
+    Text,
+    StyleSheet,
+    StatusBar
+} from 'react-native'
+
 import { ListItem } from 'react-native-elements'
-import Icon from 'react-native-vector-icons/Feather'    
-import {COLORS,DIMENS} from '../constants/styles'
+import Icon from 'react-native-vector-icons/Feather'
+
+import {
+    COLORS,
+    DIMENS
+} from '../constants/styles'
+
 import {health} from '../../test-data/data.json'
 import CustomHeader from '../parts/custom-header'
 
-class Health extends Component{
-	constructor( props ) {
-        super( props )
-        this.initialItems = health
-        this.state = {
-            data:this.initialItems,
-        }
-    }
-    static navigationOptions = {
-        header:null
-    }
+const Health = ({navigation}) => {
+
+    const [state, setState ] = React.useState({data:[]})
    
+    React.useEffect(()=>{
+        setState({data: health})
+
+    },[])
+
     _keyExtractor = (item,index) => index.toString()
 
     _renderItem = ({item}) => {
@@ -108,30 +120,30 @@ class Health extends Component{
             }
         />
     )
-	render() {
-        let {data} = this.state
 
-        return(
+    let {data} = state
 
-            <View style={STYLES.wrapper}>
-                {this._header()}
-                <View style={STYLES.body}>
-                    <StatusBar
-                            backgroundColor={COLORS.PRIMARY}
-                            barStyle="light-content"
-                    />
-                    <Icon
-                        name="smile"
-                        size={60}
-                        color={COLORS.GREY}
-                    />
-                    <Text style={STYLES.textColor}>Health info not available.</Text>
-                </View>
+    return(
+
+        <View style={STYLES.wrapper}>
+            {_header()}
+            <View style={STYLES.body}>
+                <StatusBar
+                        backgroundColor={COLORS.PRIMARY}
+                        barStyle="light-content"
+                />
+                <Icon
+                    name="smile"
+                    size={60}
+                    color={COLORS.GREY}
+                />
+                <Text style={STYLES.textColor}>Health info not available.</Text>
             </View>
+        </View>
 
-        )
-    }
+    )
 }
+
 
 const STYLES = StyleSheet.create({
     wrapper : {
@@ -183,4 +195,5 @@ const STYLES = StyleSheet.create({
         justifyContent:'flex-end'
     }
 })
+
 export default Health

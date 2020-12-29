@@ -1,19 +1,31 @@
-import React, {Component} from 'react'
-import {View,Alert, ScrollView, Picker, TextInput, TouchableOpacity, Text, StyleSheet, StatusBar } from 'react-native'
+import * as React from 'react'
+import {
+    View,
+    Alert,
+    ScrollView,
+    TextInput, 
+    TouchableOpacity, 
+    Text, 
+    StyleSheet, 
+    StatusBar 
+} from 'react-native'
+import Picker from '@react-native-community/picker'
 import Icon from 'react-native-vector-icons/Feather'
-import {COLORS,DIMENS} from '../constants/styles'
 
-export default class DiagnosisFollowUp extends Component{
+import {
+    COLORS,
+    DIMENS
+} from '../constants/styles'
 
-	constructor( props ) {
-        super( props )
-        this.state = {
-            id: props.navigation.state.params.code,
-            type: null,
-            details: '',
-        }
-    }
+const FollowUp = ({navigation}) => {
 
+    const [state, setState] = React.useState({
+        id: navigation.state.params.code,
+        type: null,
+        details: '',
+    })
+
+/* 
     static navigationOptions = ({ navigation }) => {
         return {
             headerStyle: {
@@ -41,63 +53,55 @@ export default class DiagnosisFollowUp extends Component{
                 </TouchableOpacity>
             ),
         }
-    }
+    } */
 
     _updateType = (value) => {
-
-        this.setState({type:value})
-
+        setState({type:value})
     }
 
-	render() {
-        
-        let { details } = this.state
-               
-        return(
+    const { details } = state
+            
+    return(
 
-            <View style={STYLES.wrapper}>
-                <StatusBar
-                    backgroundColor={COLORS.PRIMARY}
-                    barStyle="light-content"
+        <View style={STYLES.wrapper}>
+            <StatusBar
+                backgroundColor={COLORS.PRIMARY}
+                barStyle="light-content"
+            />
+            
+            <ScrollView style={STYLES.body}>
+                <View style={STYLES.terms}>
+                    <Text>If this is a returning patient, proceed by providing the follow up details below.</Text>
+                    <Text style={STYLES.tip}>
+                        Tap the <Icon name="check" color="black"/> at the top right. To save.
+                    </Text>
+                </View>
+
+                <View style={STYLES.pickers}>
+                    <Picker selectedValue = {state.type} onValueChange = {_updateType}>
+                        <Picker.Item label = "Type" value = "0" />
+                        <Picker.Item label = "Trimester 1" value = "1" />
+                        <Picker.Item label = "Trimester 2" value = "2" />
+                        <Picker.Item label = "Trimester 3" value = "3" />
+                        <Picker.Item label = "General" value = "4" />
+                    </Picker>
+                </View>
+
+                <TextInput style={STYLES.input}
+                    autoCorrect={false}
+                    multiline={true}
+                    underlineColorAndroid='rgba(0,0,0,0.7)'
+                    placeholderTextColor='rgba(0,0,0,0.7)'
+                    selectionColor={COLORS.SECONDARY}
+                    onChangeText={( details ) => setState( {details} )}
+                    value={details}
+                    placeholder='Follow up description...'
                 />
-                
-                <ScrollView style={STYLES.body}>
-                    <View style={STYLES.terms}>
-                        <Text>If this is a returning patient, proceed by providing the follow up details below.</Text>
-                        <Text style={STYLES.tip}>
-                            Tap the <Icon name="check" color="black"/> at the top right. To save.
-                        </Text>
-                    </View>
 
-                    <View style={STYLES.pickers}>
+            </ScrollView>
+        </View>
 
-                        <Picker selectedValue = {this.state.type} onValueChange = {this._updateType}>
-                            <Picker.Item label = "Type" value = "0" />
-                            <Picker.Item label = "Trimester 1" value = "1" />
-                            <Picker.Item label = "Trimester 2" value = "2" />
-                            <Picker.Item label = "Trimester 3" value = "3" />
-                            <Picker.Item label = "General" value = "4" />
-                        </Picker>
-                    </View>
-
-                    <TextInput style={STYLES.input}
-                        autoCorrect={false}
-                        multiline={true}
-                        underlineColorAndroid='rgba(0,0,0,0.7)'
-                        placeholderTextColor='rgba(0,0,0,0.7)'
-                        selectionColor={COLORS.SECONDARY}
-                        onChangeText={( details ) => this.setState( {details,showError:false} )}
-                        value={details}
-                        placeholder='Follow up description...'
-                    />
-
-                </ScrollView>
-
-            </View>
-
-        )
-    }
-    
+    )
 }
 
 const STYLES = StyleSheet.create({
@@ -176,3 +180,5 @@ const STYLES = StyleSheet.create({
         justifyContent:'flex-end'
     }
 })
+
+export default FollowUp

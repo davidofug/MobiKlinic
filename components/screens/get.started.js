@@ -1,7 +1,7 @@
 import * as React from 'react'
 import {StyleSheet, Text } from 'react-native'
 
-const Intro = () => {
+const GetStarted = ({navigation}) => {
     return (
         <>
             <Text>Intro</Text>
@@ -10,5 +10,5 @@ const Intro = () => {
     )
 }
 
-export default Intro
+export default GetStarted
 

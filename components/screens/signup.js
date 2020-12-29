@@ -1,39 +1,59 @@
-import React, {Component} from 'react'
-import {View, AsyncStorage, Text, TextInput,StyleSheet, StatusBar,TouchableOpacity } from 'react-native'
-import Icon from 'react-native-vector-icons/Feather';
-import {COLORS,DIMENS} from '../constants/styles'
+import * as React from 'react'
+import AsyncStorage from '@react-native-community/async-storage'
+
+import {
+	View,
+	Text,
+	TextInput,
+	StyleSheet,
+	StatusBar,
+	TouchableOpacity
+} from 'react-native'
+
+import Icon from 'react-native-vector-icons/Feather'
+
+import {
+	COLORS,
+	DIMENS
+} from '../constants/styles'
+
 import {users} from '../../test-data/data.json'
 
-export default class SignUp extends Component{
+const SignUp = ({navigation}) => {
 
-	constructor( props ) {
-        super( props )
-        this.state = {
-			firstName:'',
-			lastName:'',
-			phoneNumber:'',
-			eMail:'',
-			password:'',
-			cPassword:'',
-			msg:'',
-			hasFocus:false
-		}
+	const [state, setState] = React.useState({
+		firstName:'',
+		lastName:'',
+		phoneNumber:'',
+		eMail:'',
+		password:'',
+		cPassword:'',
+		msg:'',
+		hasFocus:false
+	})
+
+	const _onBlur = () => {
+		setState({ hasFocus: false })
 	}
 
-	_onBlur() {
-		this.setState({hasFocus:false})
+	const _onFocus = () => {
+		setState({ hasFocus: true })
 	}
 
-	_onFocus() {
-		this.setState({hasFocus:true})
-	}
+	_setUnderLineColor( hasFocus ) ( hasFocus == true ) ? COLORS.SECONDARY : COLORS.WHITE_LOW
 
-	_setUnderLineColor( hasFocus ) {
-		return (hasFocus == true ) ? COLORS.SECONDARY: COLORS.WHITE_LOW
-	}
+	const _doRegister = () => {
 
-	_doRegister() {
-		const {firstName,lastName,phoneNumber,password,hasFocus,eMail,msg} = this.state
+		const {
+			firstName,
+			lastName,
+			phoneNumber,
+			password,
+			hasFocus,
+			eMail, 
+			msg
+		} = state
+
 		if( users.length > 0) {
 			users.forEach( USER => {
 				if( USER.msdn == phoneNumber ) {
@@ -53,114 +73,113 @@ export default class SignUp extends Component{
 		}
 	}
 
-	_moveTo( screen ) {
-
-		this.props.navigation.navigate( screen )
+	const _moveTo = ( screen ) => {
+		navigation.navigate( screen )
 	}
 
-    static navigationOptions = {
-        header:null
-    }
+	const {
+		firstName,
+		lastName,
+		phoneNumber,
+		password,
+		hasFocus,
+		eMail,
+		msg
+	} = state
 
-	render() {
+	return(
+		<View style={styles.container}>
 
-		const {firstName,lastName,phoneNumber,password,hasFocus,eMail,msg} = this.state
+			<StatusBar
+				backgroundColor={COLORS.PRIMARY}
+				barStyle="light-content"
+			/>
 
-		return(
-			<View style={styles.container}>
+			<View style={styles.logoContainer}>
+				<Icon name="user" size={120} color={COLORS.SECONDARY} />
+				<Text style={styles.title}>MobiClinic</Text>
+				<Text style={styles.subTitle}>Sign up</Text>
+			</View>
 
-				<StatusBar
-					backgroundColor={COLORS.PRIMARY}
-					barStyle="light-content"
+			<View style={styles.formContainer}>
+
+				<View>
+					<Text style={styles.errorMsg}>{msg}</Text>
+				</View>
+
+				<TextInput style={styles.input}
+					autoCorrect={false}
+					onBlur = { () => this._onBlur()}
+					onFocus = { () => this._onFocus()}
+					underlineColorAndroid={this._setUnderLineColor(hasFocus)}
+					placeholderTextColor={COLORS.WHITE_LOW}
+					selectionColor={COLORS.SECONDARY}
+					onChangeText={(firstName) => this.setState({firstName})}
+					value={firstName}
+					placeholder='First name'
 				/>
 
-				<View style={styles.logoContainer}>
-					<Icon name="user" size={120} color={COLORS.SECONDARY} />
-					<Text style={styles.title}>MobiClinic</Text>
-					<Text style={styles.subTitle}>Sign up</Text>
-				</View>
+				<TextInput style={styles.input}
+					autoCorrect={false}
+					onBlur = { () => this._onBlur()}
+					onFocus = { () => this._onFocus()}
+					underlineColorAndroid={this._setUnderLineColor(hasFocus)}
+					underlineColorAndroid={COLORS.WHITE_LOW}
+					placeholderTextColor={COLORS.WHITE_LOW}
+					selectionColor={COLORS.SECONDARY}
+					onChangeText={(lastName) => this.setState({lastName})}
+					value={lastName}
+					placeholder='Last name'
+				/>
 
-				<View style={styles.formContainer}>
+				<TextInput style={styles.input}
+					autoCorrect={false}
+					underlineColorAndroid={COLORS.WHITE_LOW}
+					placeholderTextColor={COLORS.WHITE_LOW}
+					selectionColor={COLORS.SECONDARY}
+					onChangeText={(eMail) => this.setState({eMail})}
+					value={eMail}
+					placeholder='E-mail'
+				/>
 
-					<View>
-						<Text style={styles.errorMsg}>{msg}</Text>
-					</View>
+				<TextInput style={styles.input}
+					autoCorrect={false}
+					underlineColorAndroid={COLORS.WHITE_LOW}
+					placeholderTextColor={COLORS.WHITE_LOW}
+					selectionColor={COLORS.SECONDARY}
+					onChangeText={(phoneNumber) => this.setState({phoneNumber})}
+					value={phoneNumber}
+					placeholder='Phone number'
+				/>
 
-					<TextInput style={styles.input}
-						autoCorrect={false}
-						onBlur = { () => this._onBlur()}
-						onFocus = { () => this._onFocus()}
-						underlineColorAndroid={this._setUnderLineColor(hasFocus)}
-						placeholderTextColor={COLORS.WHITE_LOW}
-						selectionColor={COLORS.SECONDARY}
-						onChangeText={(firstName) => this.setState({firstName})}
-						value={firstName}
-						placeholder='First name'
-					/>
+				<TextInput style={styles.input}
+					password={true}
+					secureTextEntry={true}
+					autoCorrect={false}
+					underlineColorAndroid={COLORS.WHITE_LOW}
+					placeholderTextColor={COLORS.WHITE_LOW}
+					selectionColor={COLORS.SECONDARY}
+					onChangeText={(password) => this.setState({password})}
+					value={password}
+					placeholder='Password'
+				/>
 
-					<TextInput style={styles.input}
-						autoCorrect={false}
-						onBlur = { () => this._onBlur()}
-						onFocus = { () => this._onFocus()}
-						underlineColorAndroid={this._setUnderLineColor(hasFocus)}
-						underlineColorAndroid={COLORS.WHITE_LOW}
-						placeholderTextColor={COLORS.WHITE_LOW}
-						selectionColor={COLORS.SECONDARY}
-						onChangeText={(lastName) => this.setState({lastName})}
-						value={lastName}
-						placeholder='Last name'
-					/>
+				<TouchableOpacity
+					style={styles.submit}
+					onPress={ () => this._doRegister() }
+				>
+					<Text style={styles.submitText}>Submit</Text>
+				</TouchableOpacity>
 
-					<TextInput style={styles.input}
-						autoCorrect={false}
-						underlineColorAndroid={COLORS.WHITE_LOW}
-						placeholderTextColor={COLORS.WHITE_LOW}
-						selectionColor={COLORS.SECONDARY}
-						onChangeText={(eMail) => this.setState({eMail})}
-						value={eMail}
-						placeholder='E-mail'
-					/>
+				<TouchableOpacity
+					onPress={ () => this._moveTo( 'Login' ) }
+				>
+					<Text style={[styles.textColor,styles.linkItem]} >Already have an account? Sign in</Text>
+				</TouchableOpacity>
 
-					<TextInput style={styles.input}
-						autoCorrect={false}
-						underlineColorAndroid={COLORS.WHITE_LOW}
-						placeholderTextColor={COLORS.WHITE_LOW}
-						selectionColor={COLORS.SECONDARY}
-						onChangeText={(phoneNumber) => this.setState({phoneNumber})}
-						value={phoneNumber}
-						placeholder='Phone number'
-					/>
-
-					<TextInput style={styles.input}
-						password={true}
-						secureTextEntry={true}
-						autoCorrect={false}
-						underlineColorAndroid={COLORS.WHITE_LOW}
-						placeholderTextColor={COLORS.WHITE_LOW}
-						selectionColor={COLORS.SECONDARY}
-						onChangeText={(password) => this.setState({password})}
-						value={password}
-						placeholder='Password'
-					/>
-
-					<TouchableOpacity
-						style={styles.submit}
-						onPress={ () => this._doRegister() }
-					>
-						<Text style={styles.submitText}>Submit</Text>
-					</TouchableOpacity>
-
-					<TouchableOpacity
-						onPress={ () => this._moveTo( 'Login' ) }
-					>
-						<Text style={[styles.textColor,styles.linkItem]} >Already have an account? Sign in</Text>
-					</TouchableOpacity>
-
-				</View>
 			</View>
-		)
-		
-	}
+		</View>
+	)	
 }
 
 const styles = StyleSheet.create({
@@ -219,3 +238,5 @@ const styles = StyleSheet.create({
 		textAlign:'center',
 	}
 })
+
+export default SignUp

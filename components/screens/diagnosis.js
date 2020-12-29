@@ -1,30 +1,33 @@
-import React, {Component} from 'react'
-import {View, FlatList, TouchableOpacity,Text,StyleSheet, StatusBar } from 'react-native'
+import * as React from 'react'
+import {
+    View,
+    FlatList,
+    TouchableOpacity,
+    Text,
+    StyleSheet,
+    StatusBar 
+} from 'react-native'
+
 import { ListItem } from 'react-native-elements'
 import Icon from 'react-native-vector-icons/Feather'
-import AsyncStorage from '@react-native-community/async-storage';
-import {COLORS,DIMENS} from '../constants/styles'
+import AsyncStorage from '@react-native-community/async-storage'
+import {
+    COLORS,
+    DIMENS
+} from '../constants/styles'
+
 import CustomHeader from '../parts/custom-header'
 
-class Diagnosis extends Component{
+const Diagnose = ({navigation}) => {
 
-	constructor( props ) {
-        super( props )
-        this.state = {
-            data: []
-        }
-    }
-
-    static navigationOptions = {
-        header:null
-    }
+    const [state, setState] = React.useState({data:[]})
    
     _keyExtractor = (item, index) => index.toString()
 
     _renderItem = ({item}) => {
         return (
             <TouchableOpacity
-                onPress={() => this.props.navigation.navigate('ViewDiagnosis',item)}
+                onPress={() => navigation.navigate('ViewDiagnosis',item)}
             >
                 <ListItem
 
@@ -69,18 +72,14 @@ class Diagnosis extends Component{
         )
     }
 
-    componentWillMount() {
-        this._getDiag()
-    }
-
-    componentWillUnmount() {
-        this.setState({date:[]})
-    }
+    React.useEffect(()=> {
+        _getDiag()
+    })
     
     _getDiag = async () => {
         try {
             const value = await AsyncStorage.getItem('@diagnosis')
-            this.setState({ data: value ? JSON.parse(value) : this.state.data })
+            setState({ data: value ? JSON.parse(value) : state.data })
             
         } catch (err) {
             throw err
@@ -93,7 +92,7 @@ class Diagnosis extends Component{
             left={
                 <TouchableOpacity
                     style={{paddingLeft:10}}
-                    onPress={()=>this.props.navigation.openDrawer()}
+                    onPress={()=> navigation.openDrawer()}
                 >
                     <Icon
                         name="menu"
@@ -116,7 +115,7 @@ class Diagnosis extends Component{
 
             right={
                 <TouchableOpacity
-                    onPress={()=> this.props.navigation.navigate('NewDiagnosis')}
+                    onPress={()=> navigation.navigate('NewDiagnosis')}
                     style={{paddingRight:10}}
                 >
                     <Icon
@@ -129,55 +128,52 @@ class Diagnosis extends Component{
         />
     )
 
-	render() {
+    let {data} = state
 
-        let {data} = this.state
+    if( typeof data === 'object' && data.length == 0 )
+    
+        return(
 
-        if( typeof data === 'object' && data.length == 0 )
-        
-            return(
-
-                <View style={STYLES.wrapper}>
-                    <StatusBar
-                        backgroundColor={COLORS.PRIMARY}
-                        barStyle="light-content"
-                    />
-
-                    {this._header()}
-
-                    <View style={STYLES.body}>
-
-                        <Icon
-                            name="smile"
-                            size={60}
-                            color={COLORS.GREY}
-                        />
-
-                        <Text style={STYLES.alert}>You don't have Diagnosis info yet.</Text>
-
-                    </View>
-
-                </View>
-
-            )
-
-        return (
             <View style={STYLES.wrapper}>
                 <StatusBar
                     backgroundColor={COLORS.PRIMARY}
                     barStyle="light-content"
                 />
 
-                {this._header()}
+                {_header()}
 
-                <FlatList
-                    data = { data }
-                    renderItem = { this._renderItem }
-                    keyExtractor = { this._keyExtractor }
-                />
+                <View style={STYLES.body}>
+
+                    <Icon
+                        name="smile"
+                        size={60}
+                        color={COLORS.GREY}
+                    />
+
+                    <Text style={STYLES.alert}>You don't have Diagnosis info yet.</Text>
+
+                </View>
+
             </View>
+
         )
-    }
+
+    return (
+        <View style={STYLES.wrapper}>
+            <StatusBar
+                backgroundColor={COLORS.PRIMARY}
+                barStyle="light-content"
+            />
+
+            {_header()}
+
+            <FlatList
+                data = { data }
+                renderItem = { _renderItem }
+                keyExtractor = { _keyExtractor }
+            />
+        </View>
+    )
 }
 
 const STYLES = StyleSheet.create({
@@ -233,4 +229,4 @@ const STYLES = StyleSheet.create({
     }
 })
 
-export default Diagnosis
+export default Diagnose

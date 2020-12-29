@@ -1,26 +1,37 @@
-import React, {Component} from 'react'
-import {View, Linking, FlatList, TouchableOpacity,Text,StyleSheet, StatusBar } from 'react-native'
+import * as React from 'react'
+import {
+    View,
+    Linking,
+    FlatList,
+    TouchableOpacity,
+    Text,
+    StyleSheet, 
+    StatusBar 
+} from 'react-native'
+
 import { ListItem } from 'react-native-elements'
-import Icon from 'react-native-vector-icons/Feather'    
-import {COLORS,DIMENS} from '../constants/styles'
+import Icon from 'react-native-vector-icons/Feather'  
+
+import {
+    COLORS,
+    DIMENS
+} from '../constants/styles'
+
 import {ambulances} from '../../test-data/data.json'
 import CustomHeader from '../parts/custom-header'
 
-class Ambulance extends Component{
-	constructor( props ) {
-        super( props )
-        this.initialItems = ambulances
-        this.state = {
-            data:this.initialItems,
-        }
-    }
-    static navigationOptions = {
-        header:null
-    }
-   
-    _keyExtractor = (item,index) => index.toString()
+const Ambulance = ({navigation}) => {
 
-    _renderItem = ({item}) => {
+    const [state, setState] = React.useState({data: []})
+
+    React.useEffect(() => {
+        setState({data: ambulances})
+
+    }, [ambulances])
+
+    const _keyExtractor = (item, index) => index.toString()
+
+    const _renderItem = ({item}) => {
         return (
             <TouchableOpacity
                 onPress={() => Linking.openURL(`tel:${item.msdn}`)}
@@ -68,13 +79,14 @@ class Ambulance extends Component{
             </TouchableOpacity>
         )
     }
-    _header = () => (
+
+    const _header = () => (
         <CustomHeader
                         
             left={
                 <TouchableOpacity
                     style={{paddingLeft:10}}
-                    onPress={()=>this.props.navigation.openDrawer()}
+                    onPress={() => navigation.openDrawer()}
                 >
                     <Icon
                         name="menu"
@@ -108,43 +120,43 @@ class Ambulance extends Component{
             }
         />
     )
-	render() {
-        let {data} = this.state
 
-        if( typeof data === 'object' && data.length == 0 )
-            return(
+    let {data} = state
 
-                <View style={STYLES.container}>
-                    <CustomHeader navigation={this.props.navigation} title={'Ambulance'}/>
-                    <View>
-                        <StatusBar
-                                backgroundColor={COLORS.PRIMARY}
-                                barStyle="light-content"
-                            />
-                        <Text style={STYLES.textColor}>Ambulance not found.</Text>
-                    </View>
+    if( typeof data === 'object' && data.length == 0 )
+        return(
+
+            <View style={STYLES.container}>
+                <CustomHeader />
+                <View>
+                    <StatusBar
+                            backgroundColor={COLORS.PRIMARY}
+                            barStyle="light-content"
+                        />
+                    <Text style={STYLES.textColor}>Ambulance not found.</Text>
                 </View>
+            </View>
 
-            )
-
-        return (
-            <View style={STYLES.wrapper}>
-            <StatusBar
-                backgroundColor={COLORS.PRIMARY}
-                barStyle="light-content"
-            />
-
-            {this._header()}
-
-            <FlatList
-                data = { data }
-                renderItem = { this._renderItem }
-                keyExtractor = { this._keyExtractor }
-            />
-        </View>
         )
-    }
+
+    return (
+        <View style={STYLES.wrapper}>
+        <StatusBar
+            backgroundColor={COLORS.PRIMARY}
+            barStyle="light-content"
+        />
+
+       {_header()}
+
+        <FlatList
+            data = { data }
+            renderItem = { _renderItem }
+            keyExtractor = { _keyExtractor }
+        />
+    </View>
+    )
 }
+
 
 const STYLES = StyleSheet.create({
     wrapper : {

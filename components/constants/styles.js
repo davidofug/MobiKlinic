@@ -1,11 +1,11 @@
 export const COLORS = {
     PRIMARY:'#42a5f5',
-    SECONDARY:'#fff',
+    WHITE:'#fff',
     WHITE_LOW:'rgba(255,255,255,0.6)',
     BLACK: '#000',
     ACCENT_1:'#7cd2ff',
     ERRORS:'#f00',
-
+    GREY: '#ccc'
 }
 
 export const DIMENS = {

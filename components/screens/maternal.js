@@ -1,7 +1,10 @@
 import * as React from 'react'
-import {StyleSheet, Text } from 'react-native'
+import {
+    StyleSheet,
+    Text 
+} from 'react-native'
 
-const Maternal = () => {
+const Maternal = ({navigation}) => {
     return (
         <>
             <Text>Maternal</Text>

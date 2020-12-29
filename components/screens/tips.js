@@ -1,7 +1,10 @@
 import * as React from 'react'
-import {StyleSheet, Text } from 'react-native'
+import {
+    StyleSheet,
+    Text
+} from 'react-native'
 
-const Tips = () => {
+const Tips = ({navigation}) => {
     return (
         <>
             <Text>Tips</Text>

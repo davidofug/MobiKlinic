@@ -1,5 +1,4 @@
 import * as React from 'react'
-import axios from 'axios'
 
 import {
 	View,
@@ -18,90 +17,18 @@ import {
 	COLORS,
 	DIMENS
 } from '../constants/styles'
-import {URLS} from '../constants/API'
-import {Drawer} from '../config/navigations'
 import SignUp from './signup'
 
-const Login = ({props}) => {
+import AuthContext from '../contexts/auth'
 
-	React.useEffect(() => {
-		user.isLoggedIn && props.navigation.navigate({Dashboard})
+const Login = () => {
 
-	}, [] )
-
-	navigationOptions = {
-		header: null
-	}
-
-	const [error,setErrors] = React.useState({isError:false, msg:''})
-	const [isLoading, setLoading] = React.useState(false)
-
+	const {signIn} = React.useContext(AuthContext)
+	
 	const [user, setUser] = React.useState({
 		username: '',
 		password: '',
-		isLoggedIn: false,
-		msg: '',
-		accessToken: '',
-		refreshToken: ''
 	})
-
-	const _doLogin = async () => {
-
-		setLoading(true)
-
-		const {password, username, msg, isLoggedIn} = user
-
-		if( password != undefined || username != undefined || password != '' || username != '') {
-
-			if ( password.length > 0 && username.length > 0 ) {
-
-				try {
-
-					const response = await axios.post(`${URLS.BASE}/users/login`, {
-						'username': username,
-						'password': password
-					})
-
-					const {result, accessToken, refreshToken} = response.data
-					
-					if(result == 'Success') {
-						setUser({...user, isLoggedIn: true, accessToken, refreshToken})
-						// props.navigation.navigate({Dashboard})
-						console.log(props)
-						setLoading(false)
-
-					} else {
-
-						console.log(response)
-
-						setErrors({isError: true, msg:'Something is wrong!'})
-
-						Alert.alert(
-							'Failure',
-							`Login failed`,
-							[
-								{ text: 'OK', }
-							]
-						)
-					}
-					
-				} catch (e) {
-					console.log(e)
-				}
-			}
-		} else {
-			Alert.alert(
-				'Failed',
-				`Wrong username/password`,
-				[
-					{ text: 'OK', }
-				]
-			)
-		}
-	} 
-/* 
-	if(user.isLoggedIn)
-		return <Dashboard /> */
 
 	return(
 		<View style={styles.container}>
@@ -112,23 +39,19 @@ const Login = ({props}) => {
 
 			<View style={styles.logoContainer}>
 				<Image 
-					style={{width: 70, height: 70}}
+					style={{width: 80, height: 80}}
 					source={require('../imgs/logo.png')}
 				/>
-				<Text style={styles.title}>MobiKlinic</Text>
-				{isLoading ? <Text>Logging in, please wait...</Text> : <Text style={styles.subTitle}>Sign in</Text>}
+				<Text style={styles.title}>Sign in</Text>
 			</View>
-
-			<View style={styles.formContainer}>
-				{error.isError && <Text>{error.msg}</Text>} 
-				<View>
+				<View style={styles.formContainer}>
 					
 					<TextInput style={styles.input}
 						autoCorrect={false}
-						// underlineColorAndroid={COLORS.WHITE_LOW}
 						placeholderTextColor='grey'
+						// keyboardType={'phone-pad'}
 						selectionColor={COLORS.SECONDARY}
-						onChangeText={ text => setUser({...user, username: text, showError:false} )}
+						onChangeText={ text => setUser({...user, username: text} )}
 						value={user.username}
 						placeholder='Phone number e.g: 256778xxxxxx'
 					/>
@@ -137,27 +60,40 @@ const Login = ({props}) => {
 						password={true}
 						secureTextEntry={true}
 						autoCorrect={false}
-						//underlineColorAndroid={COLORS.WHITE_LOW}
 						placeholderTextColor='grey'
 						selectionColor={COLORS.SECONDARY}
-						onChangeText={ text => setUser({...user, password: text, showError:false} )}
+						onChangeText={ text => setUser({...user, password: text} )}
 						value={user.password}
 						placeholder='Password'
 					/>
 
-					<TouchableOpacity
-						style={styles.submit}
-						onPress={_doLogin}
-					>
-						<Text style={styles.submitText}>Sign in</Text>
-						<Icon
-							name="arrow-right"
-							size={20}
-							strokeSize={3}
-							// color={COLORS.WHITE}
-						/>
+					{
+						user.username != '' && user.password != ''
+						?
+						<TouchableOpacity
+							style={[styles.btn, styles.btnPrimary]}
+							onPress={() => signIn({user})}
+						>
+							<Text style={styles.whiteText}>Sign in</Text>
+							<Icon
+								name="arrow-right"
+								size={20}
+								strokeSize={3}
+								color={COLORS.WHITE}
+							/>
 
-					</TouchableOpacity>
+						</TouchableOpacity>
+						:
+						<TouchableOpacity style={[styles.btn, styles.btnInfo]}>
+							<Text style={styles.muteText}>Sign in</Text>
+							<Icon
+								name="arrow-right"
+								size={20}
+								strokeSize={5}
+								color={COLORS.WHITE_LOW}
+							/>
+						</TouchableOpacity>
+					}
 
 					{/*<TouchableOpacity
 						onPress={ () => this.setState({toSignUp:true})}
@@ -166,10 +102,9 @@ const Login = ({props}) => {
 					</TouchableOpacity> */}
 
 				</View>
-
 			</View>
-		</View>
-	)
+			
+		)
 
 }
 
@@ -178,17 +113,20 @@ export default Login
 const styles = StyleSheet.create({
 	container: {
 		flex:1,
-		// backgroundColor:COLORS.PRIMARY,
-		paddingLeft:DIMENS.FORM.PADDING,
-		paddingRight:DIMENS.FORM.PADDING,
+		backgroundColor:COLORS.WHITE,
 	},
 	logoContainer: {
-		flexGrow:1,
+		flexGrow:2,
 		alignItems:'center',
-		justifyContent:'center'
+		justifyContent:'center',
+		padding: DIMENS.FORM.PADDING
 	},
 	title:{
-		color: COLORS.PRIMARY
+		color: COLORS.ACCENT_1,
+		fontSize: 14,
+		fontWeight: 'bold',
+		textTransform: 'uppercase',
+		padding: DIMENS.PADDING
 	},
 	subTitle:{
 		color: COLORS.SECONDARY,
@@ -203,23 +141,18 @@ const styles = StyleSheet.create({
 		textAlign:'center'
 	},
 	formContainer:{
-		marginBottom:40
-	},
-	fieldContainer:{
-		flex:1,
-		flexDirection:'row',
-		alignItems:'flex-end',
-		justifyContent:'flex-end'
-	},
-	inputIcon:{
-		
+		flexGrow: 1,
+		padding: DIMENS.FORM.PADDING,
+		justifyContent:'center',
+		borderTopLeftRadius: 30,
+		borderTopRightRadius: 30,
+		backgroundColor: COLORS.PRIMARY
 	},
 	input: {
-		// color: COLORS.SECONDARY,
-		backgroundColor:COLORS.SECONDARY,
-		borderStyle: 'solid',
-		borderWidth: 2,
-		borderColor: '#000',
+		backgroundColor:COLORS.WHITE_LOW,
+		// borderStyle: 'solid',
+		// borderWidth: 2,
+		borderColor: COLORS.WHITE_LOW,
 		borderRadius: 50,
 		paddingHorizontal: 15,
 		paddingVertical: 5,
@@ -229,24 +162,31 @@ const styles = StyleSheet.create({
 	btn:{
 		padding: DIMENS.PADDING,
 	},
-
 	errorMsg:{
-		color:COLORS.ERRORS
+		color: COLORS.ERRORS
 	},
-	submit:{
+	btn :{
 		padding: DIMENS.PADDING,
 		flexDirection:'row',
 		justifyContent:'space-between',
 		alignItems:'center',
-		backgroundColor: COLORS.SECONDARY,
 		borderRadius: 50,
 		paddingHorizontal:15
 	},
+	btnInfo: {
+		backgroundColor: COLORS.WHITE_LOW,
+	},
+	btnPrimary:{
+		backgroundColor: COLORS.ACCENT_1,
+	},
 	submitText:{
-		//color:COLORS.PRIMARY,
-		// textAlign:'center',
-		// textTransform: 'uppercase',
 		color: COLORS.ACCENT_1,
 		fontWeight:'bold'
+	},
+	muteText: {
+		color: COLORS.WHITE_LOW
+	},
+	whiteText: {
+		color: COLORS.WHITE
 	}
 })

@@ -1,16 +1,25 @@
-import React, {Component} from 'react'
-import {View, TouchableOpacity,Text,StyleSheet, StatusBar } from 'react-native'
-import Icon from 'react-native-vector-icons/Feather';
-import {COLORS,DIMENS} from '../constants/styles'
+import * as React from 'react'
+
+import {
+    View, 
+    TouchableOpacity,
+    Text, 
+    StyleSheet,
+    StatusBar
+} from 'react-native'
+
+import Icon from 'react-native-vector-icons/Feather'
+
+import {
+    COLORS,
+    DIMENS
+} from '../constants/styles'
+
 import CustomHeader from '../parts/custom-header'
 
-export default class Settings extends Component{
+const Settings = ({navigation}) => {
 
-	constructor( props ) {
-		super( props )
-    }
-    
-    static navigationOptions = () => {
+    /*static navigationOptions = () => {
         return {
             headerStyle: {
                 backgroundColor: COLORS.SECONDARY,
@@ -20,7 +29,7 @@ export default class Settings extends Component{
                 marginTop: (Platform.OS === 'ios') ? 0 : 2
             },
             headerTintColor: COLORS.BLACK ,
-            /* headerRight: (
+                headerRight: (
                 <TouchableOpacity
                     onPress = {_save()}
                     style={{paddingRight:10}}
@@ -31,9 +40,11 @@ export default class Settings extends Component{
                         color={COLORS.SECONDARY}
                     />
                 </TouchableOpacity>
-            ), */
+            ),
         }     
     }
+    */
+
     _header = () => (
         <CustomHeader
                         
@@ -74,47 +85,44 @@ export default class Settings extends Component{
             }
         />
     )
-	render() {
         
-        return(
+    return(
 
-            <View style={STYLES.wrapper}>
-                <StatusBar
-                    backgroundColor={COLORS.SECONDARY}
-                    barStyle="dark-content"
+        <View style={STYLES.wrapper}>
+            <StatusBar
+                backgroundColor={COLORS.SECONDARY}
+                barStyle="dark-content"
+            />
+            {_header()}
+            <View style={STYLES.body}>
+
+                <Icon
+                    name="sliders"
+                    size={60}
+                    color={COLORS.GREY}
                 />
-                {this._header()}
-                <View style={STYLES.body}>
 
-                    <Icon
-                        name="sliders"
-                        size={60}
-                        color={COLORS.GREY}
-                    />
+                <Text style={[STYLES.alert,STYLES.heading]}>Reminers</Text>
+                <Text style={[STYLES.alert,STYLES.desc]}>Be reminded about</Text>
 
-                    <Text style={[STYLES.alert,STYLES.heading]}>Reminers</Text>
-                    <Text style={[STYLES.alert,STYLES.desc]}>Be reminded about</Text>
+                <Text style={STYLES.alert}>Workouts</Text>
+                <Text style={STYLES.alert}>Meals</Text>
+                <Text style={STYLES.alert}>Sleeping</Text>
+                <Text style={STYLES.alert}>Meditation </Text>
+                <Text style={STYLES.alert}>Medication </Text>
 
-                    <Text style={STYLES.alert}>Workouts</Text>
-                    <Text style={STYLES.alert}>Meals</Text>
-                    <Text style={STYLES.alert}>Sleeping</Text>
-                    <Text style={STYLES.alert}>Meditation </Text>
-                    <Text style={STYLES.alert}>Medication </Text>
+                <Text style={[STYLES.alert,STYLES.heading]}>Notifications</Text>
+                <Text style={[STYLES.alert,STYLES.desc]}>Choose the type of notifications and how you want to be notified</Text>
 
-                    <Text style={[STYLES.alert,STYLES.heading]}>Notifications</Text>
-                    <Text style={[STYLES.alert,STYLES.desc]}>Choose the type of notifications and how you want to be notified</Text>
-
-                    <Text style={STYLES.alert}>Sounds or Vibration</Text>
-                    <Text style={STYLES.alert}>Health tips</Text>
-                    <Text style={STYLES.alert}>Health events.</Text>
-
-                </View>
+                <Text style={STYLES.alert}>Sounds or Vibration</Text>
+                <Text style={STYLES.alert}>Health tips</Text>
+                <Text style={STYLES.alert}>Health events.</Text>
 
             </View>
 
-        )
-    }
-    
+        </View>
+
+    )
 }
 
 const STYLES = StyleSheet.create({
@@ -170,3 +178,5 @@ const STYLES = StyleSheet.create({
         justifyContent:'flex-end'
     }
 })
+
+export default Settings

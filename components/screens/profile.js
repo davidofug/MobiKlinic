@@ -1,33 +1,24 @@
-import React, {Component} from 'react'
-import {View, TouchableHighlight, AsyncStorage, Text,StyleSheet, StatusBar } from 'react-native'
+import * as React from 'react'
+import {
+    View, 
+    TouchableHighlight,
+    Text,
+    StyleSheet,
+    StatusBar 
+} from 'react-native'
 import Icon from 'react-native-vector-icons/Feather';
-import {COLORS,DIMENS} from '../constants/styles'
-import {users} from '../../test-data/data.json'
+import {
+    COLORS,
+    DIMENS
+} from '../constants/styles'
 
-class Profile extends Component{
+const Profile = ({navigation}) => {
 
-	constructor( props ) {
-		super( props )
-    }
-    
-    static navigationOptions = {
-        headerStyle:{
-            borderBottomWidth: 0,
-            elevation:0,
-            shadowColor:'transparent',
-            backgroundColor:COLORS.PRIMARY,
-        }
-    }
-
-	render() {
-        
-        return (
-            <View>
-                <Text>Member Profile</Text>
-            </View>
-        )
-    }
-    
+    return (
+        <View>
+            <Text>Member Profile</Text>
+        </View>
+    )
 }
 
 const STYLES = StyleSheet.create({

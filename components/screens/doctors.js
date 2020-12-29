@@ -1,22 +1,29 @@
-import React, {Component} from 'react'
-import {View, Linking, FlatList, TouchableOpacity,Text,StyleSheet, StatusBar } from 'react-native'
+import * as React from 'react'
+import {
+    View, 
+    Linking,
+    FlatList,
+    TouchableOpacity,
+    Text,
+    StyleSheet,
+    StatusBar
+} from 'react-native'
 import { ListItem } from 'react-native-elements'
 import Icon from 'react-native-vector-icons/Feather'    
-import {COLORS,DIMENS} from '../constants/styles'
+import {
+    COLORS,
+    DIMENS
+} from '../constants/styles'
 import {doctors} from '../../test-data/data.json'
 import CustomHeader from '../parts/custom-header'
 
-class Doctors extends Component{
-	constructor( props ) {
-        super( props )
-        this.initialItems = doctors
-        this.state = {
-            data:this.initialItems,
-        }
-    }
-    static navigationOptions = {
-        header:null
-    }
+const Doctors = ({navigation}) => {
+
+    const [state, setState] = React.useState({data:''})
+
+    React.useEffect(()=>{
+        setState({data: doctors})
+    },[doctors])
    
     _keyExtractor = (item,index) => index.toString()
 
@@ -74,7 +81,7 @@ class Doctors extends Component{
             left={
                 <TouchableOpacity
                     style={{paddingLeft:10}}
-                    onPress={()=>this.props.navigation.openDrawer()}
+                    onPress={()=> navigation.openDrawer()}
                 >
                     <Icon
                         name="menu"
@@ -108,48 +115,47 @@ class Doctors extends Component{
             }
         />
     )
-	render() {
-        let {data} = this.state
 
-        if( typeof data === 'object' && data.length == 0 )
-            return(
+    let {data} = state
 
-                <View style={STYLES.container}>
-                    <CustomHeader navigation={this.props.navigation} title={'Doctors'}/>
-                    <View>
-                        <StatusBar
-                                backgroundColor={COLORS.PRIMARY}
-                                barStyle="light-content"
-                            />
-                        <Text style={STYLES.textColor}>Doctors not found.</Text>
-                    </View>
+    if( typeof data === 'object' && data.length == 0 )
+        return(
+
+            <View style={STYLES.container}>
+                <CustomHeader navigation={navigation} title={'Doctors'}/>
+                <View>
+                    <StatusBar
+                            backgroundColor={COLORS.PRIMARY}
+                            barStyle="light-content"
+                        />
+                    <Text style={STYLES.textColor}>Doctors not found.</Text>
                 </View>
-
-            )
-
-        return (
-            <View style={STYLES.wrapper}>
-                <StatusBar
-                    backgroundColor={COLORS.PRIMARY}
-                    barStyle="light-content"
-                />
-
-                {this._header()}
-
-                <FlatList
-                    data = { data }
-                    renderItem = { this._renderItem }
-                    keyExtractor = { this._keyExtractor }
-                />
             </View>
+
         )
-    }
+
+    return (
+        <View style={STYLES.wrapper}>
+            <StatusBar
+                backgroundColor={COLORS.PRIMARY}
+                barStyle="light-content"
+            />
+
+            {_header()}
+
+            <FlatList
+                data = { data }
+                renderItem = { _renderItem }
+                keyExtractor = { _keyExtractor }
+            />
+        </View>
+    )
 }
 
 const STYLES = StyleSheet.create({
     wrapper : {
         flex:1,
-        backgroundColor:COLORS.SECONDARY,
+        backgroundColor: COLORS.SECONDARY,
     },
     header : {
         flex:1,
@@ -196,4 +202,5 @@ const STYLES = StyleSheet.create({
         justifyContent:'flex-end'
     }
 })
+
 export default Doctors

@@ -1,6 +1,6 @@
 import {AppRegistry} from 'react-native'
 
-import Splash from './components/screens/splash'
+import Entry from './components/entry'
 import {name as appName} from './app.json'
 
-AppRegistry.registerComponent(appName, () => Splash)
+AppRegistry.registerComponent(appName, () => Entry)

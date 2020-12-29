@@ -1,56 +1,64 @@
-import React, {Component} from 'react'
-import {View, TouchableHighlight, Text,StyleSheet, StatusBar } from 'react-native'
+import * as React from 'react'
+
+import {
+    View, 
+    TouchableOpacity, 
+    Text,
+    StyleSheet,
+    StatusBar
+} from 'react-native'
+
 import Icon from 'react-native-vector-icons/Feather'
-import {COLORS,DIMENS} from '../constants/styles'
+
+import {
+    COLORS,
+    DIMENS
+} from '../constants/styles'
+
 import CustomHeader from '../parts/custom-header'
 
-export default class Dashboard extends Component{
-
-	constructor( props ) {
-		super( props )
-    }
-
-	render() {
-        
-        return (
-            <View style={STYLES.wrapper}>
-                <StatusBar
-                    backgroundColor={COLORS.PRIMARY}
-                    barStyle="light-content"
-                />
-                <CustomHeader 
-                    style={STYLES.header}                     
-                    left={
+const Dashboard = ({navigation}) => {
+    
+    return (
+        <View style={STYLES.wrapper}>
+            <StatusBar
+                backgroundColor={COLORS.PRIMARY}
+                barStyle="light-content"
+            />
+            <CustomHeader 
+                style={STYLES.header}                     
+                left={
+                    <TouchableOpacity
+                        style={STYLES.leftHeader}
+                    >
                         <Icon
                             name="menu"
                             size={32}
                             color={COLORS.SECONDARY}
-                            style={STYLES.leftHeader}
-                            onPress={()=>this.props.navigation.openDrawer()}
+                            onPress={() => navigation.openDrawer()}
                         />
-                    }
-                    title={
-                        <Text
+                    </TouchableOpacity>
+                }
+                title={
+                    <Text
                         style={[STYLES.centerHeader,STYLES.title]}
-                        >
-                            Dashboard
-                        </Text>
-                    }
+                    >
+                        Dashboard
+                    </Text>
+                }
+            />
+
+            <View style={STYLES.body}>
+                <Icon
+                    name="smile"
+                    size={60}
+                    color={COLORS.GREY}
                 />
-
-               <View style={STYLES.body}>
-                    <Icon
-                        name="smile"
-                        size={60}
-                        color={COLORS.GREY}
-                    />
-                    <Text style={STYLES.alert}>No data to show now.</Text>
-               </View>
-
+                <Text style={STYLES.alert}>No data to show now.</Text>
             </View>
-        )
-    }
-    
+
+        </View>
+    )
 }
 
 const STYLES = StyleSheet.create({
@@ -98,3 +106,5 @@ const STYLES = StyleSheet.create({
         flex: 1
     }
 })
+
+export default Dashboard

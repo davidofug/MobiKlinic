@@ -4,7 +4,7 @@ import Icon from 'react-native-vector-icons/Feather';
 import {COLORS,DIMENS} from '../constants/styles'
 import CustomHeader from '../parts/custom-header'
 
-const About = () => {
+const About = ({navigation}) => {
 
 	_header = () => (
         <CustomHeader
@@ -12,7 +12,7 @@ const About = () => {
             left={
                 <TouchableOpacity
                     style={{paddingLeft:10}}
-                    onPress={()=>this.props.navigation.openDrawer()}
+                    onPress={()=> navigation.openDrawer()}
                 >
                     <Icon
                         name="menu"
@@ -54,7 +54,7 @@ const About = () => {
                 backgroundColor={COLORS.PRIMARY}
                 barStyle="light-content"
             />
-            {this._header()}
+            {_header()}
             <View style={STYLES.body}>
                 <View style={STYLES.logoContainer}>
                     <Image 
@@ -79,7 +79,7 @@ const About = () => {
     )
 
 }
-export default About
+
 const STYLES = StyleSheet.create({
 	logoContainer: {
 		alignItems:'center',
@@ -141,3 +141,5 @@ const STYLES = StyleSheet.create({
         justifyContent:'flex-end'
     }
 })
+
+export default About
